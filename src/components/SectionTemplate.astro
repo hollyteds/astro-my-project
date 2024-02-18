@@ -1,0 +1,16 @@
+---
+import Headline from "@components/Headline.astro";
+
+interface Props {
+  class?: string;
+  id?: string;
+}
+
+const { class: className, ...props } = Astro.props;
+---
+
+<section {...props} class:list={[className, "pb-10 pt-20"]}>
+  <Headline class="text-5xl font-bold text-white [text-shadow:1px_1px_black] md:text-7xl" title="TEMPLATE" subTitle="テンプレート" />
+  <div class="mx-auto mt-10 max-w-5xl bg-white">
+  </div>
+</section>

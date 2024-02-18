@@ -1,0 +1,34 @@
+---
+import { Picture, BackgroundImage, BackgroundPicture } from "astro-simple-art-direction";
+---
+
+<section id="MainVisual" class="">
+  <BackgroundPicture
+    class="pb-10 sm:pb-20"
+    size={{ width: "100%", height: "100%" }}
+    TagName="div"
+    src={{
+      file: "coming-soon.jpg",
+      width: 1920,
+      height: 1515,
+    }}
+    artDirectives={[
+      {
+        media: "(max-width: 767px)",
+        file: "coming-soon.jpg",
+        width: 768,
+        height: 606,
+      },
+    ]}
+    loading="eager"
+  >
+    <h1 class="mx-auto max-w-3xl px-5 text-center font-sans text-2xl font-bold md:text-3xl">
+
+    </h1>
+  </BackgroundPicture>
+</section>
+<style>
+  h1 {
+    padding-top: var(--header-height);
+  }
+</style>

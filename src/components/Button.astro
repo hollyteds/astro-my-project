@@ -1,0 +1,50 @@
+---
+interface Props {
+  link?: string;
+  class?: string;
+  subClass?: string;
+  align?: string;
+  isNewTab?: boolean;
+}
+
+const { link, class: className, isNewTab = false, subClass, ...props } = Astro.props;
+
+const mergeProps = {
+  ...props,
+  ...(isNewTab
+    ? {
+        target: "_blank",
+        rel: "noopener noreferrer",
+      }
+    : null),
+};
+
+const checkClass: Function = (targetClassName: string, checkClassList: string | undefined = className) => {
+  return checkClassList && checkClassList.split(" ").some((cls) => cls.startsWith(targetClassName));
+};
+const classList: (string | null | undefined)[] = [className, checkClass("w-") ? null : "w-96", checkClass("max-w-") ? null : "max-w-full", "font-bold shadow-sm text-white inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white ring-offset-gray-900 focus:ring-button-ring"];
+
+const subClassList: (string | null | undefined)[] = [subClass, checkClass("py-", subClass) ? null : "py-3", checkClass("px-", subClass) ? null : "px-2", "flex justify-center items-center"];
+---
+
+<a {...mergeProps} href={link ?? "#top"} class:list={classList}>
+  <span class:list={[subClassList]}><slot /></span>
+</a>
+<style lang="scss">
+  a {
+    // background-image: linear-gradient(240deg,#da7dff 0,#4d86ff 100%);
+    background-color: black;
+    transition: color 0.2s;
+    span {
+      width: 100%;
+      background-color: red;
+      transition: background-color 0.3s;
+    }
+    &:hover,
+    &:focus-visible {
+      span {
+        background-color: transparent;
+      }
+    }
+  }
+</style>

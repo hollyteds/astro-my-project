@@ -1,0 +1,59 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import MainVisual from "@components/MainVisual.astro";
+import { Picture, BackgroundImage, BackgroundPicture } from "astro-simple-art-direction";
+import { getImageAsset } from "@renderers/getImageAsset.ts";
+
+const thumbnail = await getImageAsset({
+  file: "coming-soon.jpg", //ogp-image
+  width: 1200,
+  height: 630,
+});
+const ogpImage = thumbnail ? thumbnail.defaultFormat[1].src : "";
+
+interface Object {
+  [key: string]: string;
+}
+
+const siteUrl: string = "";
+const name: string = "";
+const description: string = "";
+const title: string = name + " | ";
+
+const meta: Object = {
+  title: title,
+  description: description,
+};
+
+const ogp: Object = {
+  title: title,
+  description: description,
+  type: "website",
+  image: siteUrl + ogpImage,
+  url: siteUrl + "/",
+  site_name: title,
+};
+
+const schema: string = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: title,
+  image: siteUrl + ogpImage,
+});
+---
+
+<Layout meta={meta} schema={schema} ogp={ogp}>
+  <Header />
+  <main id="top">
+    <MainVisual />
+  </main>
+  <Footer />
+</Layout>
+
+<style lang="scss" is:global>
+  svg {
+    fill: currentColor;
+  }
+</style>
